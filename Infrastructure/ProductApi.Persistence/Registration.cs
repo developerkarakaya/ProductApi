@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProductApi.Application.Interfaces.Repositories;
+using ProductApi.Application.Interfaces.UnitOfWorks;
 using ProductApi.Persistence.Context;
+using ProductApi.Persistence.Repositories;
+using ProductApi.Persistence.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +21,10 @@ namespace ProductApi.Persistence
         public static void AddPersistence(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+            services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
         }
     }

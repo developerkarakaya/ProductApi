@@ -1,4 +1,6 @@
 using ProductApi.Persistence;
+using ProductApi.Application;
+using ProductApi.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Configuration.SetBasePath(env.ContentRootPath)
 
 
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddApplication();
+builder.Services.AddCustomMapper();
 
 var app = builder.Build();
 
@@ -29,5 +33,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
+app.MapControllers();
 app.Run();

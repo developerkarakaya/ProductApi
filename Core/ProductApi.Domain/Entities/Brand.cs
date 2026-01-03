@@ -16,6 +16,6 @@ namespace ProductApi.Domain.Entities
         public Brand()
         {
         }
-        public required string Name { get; set; }
+        public  string Name { get; set; }
     }
 }
