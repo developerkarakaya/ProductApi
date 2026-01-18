@@ -1,6 +1,6 @@
 using ProductApi.Persistence;
 using ProductApi.Application;
-using ProductApi.Mapper;
+using ProductApi.Application.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "Product API");
     });
 }
-
+app.ConfigureExceptionHandlingMiddleware();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

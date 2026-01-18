@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ProductApi.Application.Features.Products.Command.UpdateProduct
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest,Unit>
     {
         public IUnitOfWork UnitOfWork { get; }
         public IMapper Mapper { get; }
@@ -22,7 +22,7 @@ namespace ProductApi.Application.Features.Products.Command.UpdateProduct
         }
 
 
-        public async Task Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
             var product = await UnitOfWork.GetReadRepository<Product>().GetAsync(s=>s.Id == request.Id && !s.IsDeleted);
             var map = Mapper.Map<Product,UpdateProductCommandRequest>(request);
@@ -39,6 +39,8 @@ namespace ProductApi.Application.Features.Products.Command.UpdateProduct
             }
             await UnitOfWork.GetWriteRepository<Product>().UpdateAsync(map);
             await UnitOfWork.SaveAsync();
+
+            return Unit.Value;
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ProductApi.Application.Features.Products.Rules;
 using ProductApi.Application.Interfaces.UnitOfWorks;
 using ProductApi.Domain.Entities;
 using System;
@@ -9,19 +10,29 @@ using System.Threading.Tasks;
 
 namespace ProductApi.Application.Features.Products.Command.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest,Unit>
     {
         public IUnitOfWork UnitOfWork { get; }
+        public ProductRules ProductRules { get; }
 
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork)
+        public CreateProductCommandHandler(IUnitOfWork unitOfWork,ProductRules productRules)
         {
             UnitOfWork = unitOfWork;
+            ProductRules = productRules;
         }
 
 
-        public async Task Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
+
+            IList<Product> products = await UnitOfWork.GetReadRepository<Product>()
+                .GetAllAsync();
+            await ProductRules.ProductTitleMustNotBeSame(products,request.Title);
+
+
+
             Product product = new(request.Title, request.Description, request.BrandId, request.Price, request.Discount);
+
             await UnitOfWork.GetWriteRepository<Product>().AddAsync(product);
             var result = await UnitOfWork.SaveAsync();
 
@@ -45,6 +56,8 @@ namespace ProductApi.Application.Features.Products.Command.CreateProduct
                    await UnitOfWork.SaveAsync();
                 }
             }
+
+            return Unit.Value;
         }
     }
 }
