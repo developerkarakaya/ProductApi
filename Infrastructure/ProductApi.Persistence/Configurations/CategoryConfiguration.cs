@@ -16,6 +16,7 @@ namespace ProductApi.Persistence.Configurations
         {
             builder.Property(ss => ss.Name).HasMaxLength(256);
 
+            var now = new DateTime(2026, 01, 22);
 
             Category category1 = new Category
             {
@@ -23,7 +24,7 @@ namespace ProductApi.Persistence.Configurations
                 Name = "Elektronik",
                 ParentId = 0,
                 Priorty = 1,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
             };
 
@@ -33,7 +34,7 @@ namespace ProductApi.Persistence.Configurations
                 Name = "Moda",
                 ParentId = 0,
                 Priorty = 2,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
             };
 
@@ -43,7 +44,7 @@ namespace ProductApi.Persistence.Configurations
                 Name = "Bilgisayar",
                 ParentId = 1,
                 Priorty = 1,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
             };
             Category parent2 = new Category
@@ -52,7 +53,7 @@ namespace ProductApi.Persistence.Configurations
                 Name = "Kadın",
                 ParentId = 2,
                 Priorty = 1,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
             };
             builder.HasData(category1, category2, parent1, parent2);

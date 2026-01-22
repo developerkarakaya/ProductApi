@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProductApi.Domain.Entities;
 using System;
@@ -10,14 +11,13 @@ using System.Threading.Tasks;
 
 namespace ProductApi.Persistence.Context
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext:IdentityDbContext<User,Role,Guid>
     {
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public AppDbContext()
-        {
-        }
+     
 
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Detail> Details { get; set; }
@@ -31,10 +31,6 @@ namespace ProductApi.Persistence.Context
             // konfigurasyonları otomatik olarak uygulamak için
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.ConfigureWarnings(w =>
-                w.Ignore(RelationalEventId.PendingModelChangesWarning));
-        }
+       
     }
 }

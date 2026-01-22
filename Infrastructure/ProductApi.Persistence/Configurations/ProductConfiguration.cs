@@ -14,6 +14,7 @@ namespace ProductApi.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
+            var now = new DateTime(2026, 01, 22);
 
             Faker faker = new("tr");
 
@@ -25,7 +26,7 @@ namespace ProductApi.Persistence.Configurations
                 Discount = faker.Random.Decimal(1, 10),
                 BrandId = 1,
                 Price = Convert.ToDecimal(faker.Commerce.Price(100, 1000)),
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
                 Brand = null!
             };
@@ -38,7 +39,7 @@ namespace ProductApi.Persistence.Configurations
                 Discount = faker.Random.Decimal(1, 10),
                 BrandId = 3,
                 Price = Convert.ToDecimal(faker.Commerce.Price(100, 1000)),
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
                 Brand = null!
             };

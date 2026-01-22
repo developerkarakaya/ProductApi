@@ -15,6 +15,7 @@ namespace ProductApi.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Detail> builder)
         {
             Faker faker = new("tr");
+            var now = new DateTime(2026, 01, 22);
 
             Detail detail1 = new Detail
             {
@@ -22,7 +23,7 @@ namespace ProductApi.Persistence.Configurations
                 Title = faker.Commerce.ProductName(),
                 Description = faker.Commerce.ProductDescription(),
                 CategoryId = 1,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
             };
 
@@ -32,7 +33,7 @@ namespace ProductApi.Persistence.Configurations
                 Title = faker.Commerce.ProductName(),
                 Description = faker.Commerce.ProductDescription(),
                 CategoryId = 3,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = false,
             };
             Detail detail3 = new Detail
@@ -41,7 +42,7 @@ namespace ProductApi.Persistence.Configurations
                 Title = faker.Commerce.ProductName(),
                 Description = faker.Commerce.ProductDescription(),
                 CategoryId = 4,
-                CreatedDate = DateTime.Now,
+                CreatedDate = now,
                 IsDeleted = true,
             };
 

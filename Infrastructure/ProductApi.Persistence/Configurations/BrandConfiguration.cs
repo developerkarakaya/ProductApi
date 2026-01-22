@@ -15,6 +15,7 @@ namespace ProductApi.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
             builder.Property(ss => ss.Name).HasMaxLength(256);
+            var now = new DateTime(2026, 01, 22);
 
             Faker faker = new("tr");
 
@@ -22,7 +23,7 @@ namespace ProductApi.Persistence.Configurations
                 new Brand(faker.Company.CompanyName())
                 {
                     Id = i,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = now,
                     IsDeleted=false,
                     Name = faker.Commerce.Department(),
                 }).ToList();
